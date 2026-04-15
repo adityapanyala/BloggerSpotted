@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import axios from "axios";
 
 const AuthContext = createContext(null);
+const API_URL = import.meta.env.VITE_API_URL;
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -13,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const checkUserStatus = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/auth/current_user",
+        `${API_URL}/auth/current_user`,
         { withCredentials: true }
       );
       setUser(response.data);
@@ -24,12 +25,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async () => {
-    window.location = "http://localhost:5000/api/auth/google";
+    window.location = `${API_URL}/auth/google`;
   };
 
   const logout = async () => {
     try {
-      await axios.get("http://localhost:5000/api/auth/logout", {
+      await axios.get(`${API_URL}/auth/logout`, {
         withCredentials: true,
       });
       setUser(null);

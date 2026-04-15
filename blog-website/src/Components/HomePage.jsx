@@ -8,7 +8,7 @@ const HomePage = () => {
   const [topics, setTopics] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchTrendingTopics();
@@ -17,7 +17,7 @@ const HomePage = () => {
   const fetchTrendingTopics = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/trending/trending-topics",
+        `${API_URL}/trending/trending-topics`,
         { withCredentials: true }
       );
       console.log("Trending Topics Response:", response.data);

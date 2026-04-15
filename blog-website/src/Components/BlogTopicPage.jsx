@@ -17,7 +17,7 @@ const BlogTopicPage = () => {
   const [summaries, setSummaries] = useState({});
   const [loadingSummary, setLoadingSummary] = useState(false);
 
-  const API_URL = "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const addNewBlog = async (blogData) => {
     try {
@@ -76,7 +76,7 @@ const BlogTopicPage = () => {
   const fetchTopicAndBlogs = async () => {
     try {
       const topicResponse = await axios.get(
-        "http://localhost:5000/api/trending/trending-topics"
+        `${API_URL}/trending/trending-topics`
       );
 
       const matchingTopic = topicResponse.data.find(
@@ -88,7 +88,7 @@ const BlogTopicPage = () => {
       }
 
       const blogsResponse = await axios.get(
-        `http://localhost:5000/api/blogs/topic/${encodeURIComponent(topic)}`
+        `${API_URL}/blogs/topic/${encodeURIComponent(topic)}`
       );
 
       setTopicBlogs(blogsResponse.data);
