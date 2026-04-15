@@ -30,20 +30,16 @@ router.post("/enhance", async (req, res) => {
 
     Enhanced version:`;
 
-    const result = await hf.textGeneration({
-      model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
-      inputs: prompt,
-      parameters: {
-        max_new_tokens: 1000,
-        temperature: 0.7,
-        repetition_penalty: 1.2,
-        return_full_text: false,
-      },
+    const result = await hf.chatCompletion({
+      model: "Qwen/Qwen2.5-7B-Instruct",
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 1000,
+      temperature: 0.7,
     });
 
     console.log(result);
 
-    const enhancedText = result.generated_text?.trim();
+    const enhancedText = result.choices[0].message.content?.trim();
 
     if (!enhancedText) {
       throw new Error("Empty response from AI model");
